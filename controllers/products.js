@@ -3,6 +3,37 @@ const UserModel = require('../models/User')
 
 const mongoose = require('mongoose')
 
+exports.create = async (req, res, next) => {
+  try {
+    const {
+      title,
+      price,
+      description,
+      images
+    } = req.body
+
+    const product = await ProductsModel.create({
+      title,
+      price,
+      description,
+      images,
+    })
+
+    return res.status(201).json({
+      success: true,
+      message: 'Product created successfully',
+      product,
+    })
+  
+  } catch (error) {
+    console.log('error creating product:\n', error)
+    res.status(500).json({
+      success: false,
+      message: 'Could not create product at this time',
+    })
+  }
+}
+
 /***
  *  @description Get all products listed
  *  @route POST /api/v1/products
