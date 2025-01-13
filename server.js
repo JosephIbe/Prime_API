@@ -16,7 +16,6 @@ app.use(express.json())
 app.use(cors())
 
 const auth = require('./routes/auth')
-const profile = require('./routes/profile')
 const products = require('./routes/products')
 
 app.get('/', (req, res, next)=>{
@@ -24,7 +23,6 @@ app.get('/', (req, res, next)=>{
 })
 
 app.use('/api/v1/auth', auth)
-app.use('/api/v1/user', profile)
 app.use('/api/v1/products', products)
 
 const port = process.env.PORT || 6000

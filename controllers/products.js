@@ -1,6 +1,5 @@
 const ProductsModel = require('../models/Products')
 const UserModel = require('../models/User')
-const NotificationsModel = require('../models/Offers')
 
 const mongoose = require('mongoose')
 

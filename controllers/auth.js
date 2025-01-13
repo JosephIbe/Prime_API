@@ -1,11 +1,8 @@
-
 const UserModel = require('../models/User')
-const ReferralsModel = require('../models/Referrals')
 
 const {registerSchema, loginSchema} = require('../utils/validation_schema')
 
 const OTPVerification = require("../models/OTPVerification")
-const PasswordChangeModel = require("../models/PasswordChange")
 const bcrypt = require("bcryptjs")
 const sendEmail = require('../utils/email')
 
@@ -74,7 +71,6 @@ exports.registerUser = async (req, res, next) => {
                         success: true,
                         message: `Registration successful. A secure code has been sent to ${email} for verification`,
                         user,
-                        referralCode,
                         token
                       })      
                 } catch(err){
@@ -109,7 +105,7 @@ exports.verifyEmail = async (req, res, next) => {
             return res.status(404)
                       .json({
                         success: false,
-                        message: `The email ${email} is not registered with Agoris`
+                        message: `The email ${email} is not registered with Prime Health`
                       })  
         }
 
@@ -141,8 +137,8 @@ exports.verifyEmail = async (req, res, next) => {
 
                     if(expiresAt < Date.now()){
                         // await record.findByIdAndRemove({recordId})
-                        // await record.remove({})
-                        await record.deleteMany({})
+                        await record.remove({})
+                        // await record.deleteMany({})
 
                         return res.json(404)
                             .status({
@@ -162,12 +158,12 @@ exports.verifyEmail = async (req, res, next) => {
                             // await record.remove({})
                             // await record.findByIdAndRemove({recordId})
                             // await record.delete({userId})
-                            await record.deleteMany({})
+                            // await record.deleteMany({})
                     
-                            const message = `Hello ${user.firstName}, Your email has been verified. Happy Shopping on Agoris\n\n \n\n\n From,\nThe Agoris Team`
+                            const message = `Hello ${user.firstName}, Your email has been verified. Happy Shopping on Prime Health\n\n \n\n\n From,\nThe Development Team`
                             await sendEmail({
                                 email: req.body.email,
-                                subject: "Welcome to Agoris",
+                                subject: "Welcome to Prime Health",
                                 message,
                                 amp: ``
                             })
@@ -181,7 +177,7 @@ exports.verifyEmail = async (req, res, next) => {
                 }
             }
 
-        } catch(err){
+        } catch(err){   
             console.log(`err sending mail\n${err}`)
         }
 
